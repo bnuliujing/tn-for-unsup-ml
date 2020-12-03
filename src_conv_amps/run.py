@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
-from multilayer_mps_softmax_layer8 import AutoregressiveMPS_sharing
+from convolution_mps import AutoregressiveMPS_sharing
 import time
 import os
 from args import args
