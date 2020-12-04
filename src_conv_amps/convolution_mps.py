@@ -172,34 +172,7 @@ class AutoregressiveMPS_sharing(nn.Module):
                         data[:, i * 28 + j, :, :, :] = samples[:, i:i + self.height, j:j + self.width, :]
                 x_hat = self.MPS_model(data)
         return x_hat
-    def sample(self,samples,gene=False,idx=None,jdx=None):
-        batch_size = samples.shape[0]
-        if self.select != 0:
-            m = torch.nn.ConstantPad2d((self.h, self.h, self.h, 0), 0)
-            sample=torch.zeros([samples.shape[0], (self.height + idx)*28, self.Dmax])
-            sample[:,:idx * 28 + jdx+1,:]=samples
-            sample = m(sample.view(sample.shape[0], self.height + idx, 28, self.Dmax).permute(0, 3, 1, 2)).permute(0,2,3,1)
-        if self.select == 2:
-            data = torch.zeros([batch_size, idx * 28 + jdx+1, self.height, self.width, self.Dmax]).to(self.device)
-            x_hat = torch.zeros([batch_size, idx * 28 + jdx+1,2], device=self.device)
-            for i in range(idx * 28 + jdx+1):
-                data[:, i, :, :, :] = sample[:, i // 28:i // 28 + self.height, i % 28:i % 28 + self.width, :]
-            x_hat = self.MPS_model(data)
-
-        else:
-            x_hat = torch.zeros([batch_size, idx * 28 + jdx+1, self.Dmax], device=self.device)
-            if self.select == 0:
-                data = torch.zeros([batch_size, idx * 28 + jdx+1, self.height, self.width]).to(self.device)
-                for i in range(idx * 28 + jdx+1):
-                    data[:, i, :, :] = samples[:, i // 28:i // 28 + self.height, i % 28:i % 28 + self.width]
-                x_hat= self.MPS_model(data)
-            else:
-                data = torch.zeros([batch_size, idx * 28 + jdx+1, self.height, self.width, self.Dmax]).to(self.device)
-                for i in range(idx * 28 + jdx+1):
-                    data[:, i, :, :, :] = sample[:, i // 28:i // 28 + self.height, i % 28:i % 28 + self.width, :]
-                x_hat = self.MPS_model(data)
-        return x_hat
-
+    
 
 
 
