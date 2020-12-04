@@ -47,12 +47,12 @@ def main():
         # for p in model.parameters():
         #     nn.utils.clip_grad_norm_(p, max_norm=1)
         optimizer.step()
-        if nll_loss.item() < best_nll and nll_loss.item() > np.log(args.m):
+        if nll_loss.item() < best_nll:
             best_nll = nll_loss.item()
-        # print('Epoch %i\tNLL %.6f' % (epoch, best_nll))
+        print('Epoch %i\tNLL %.6f' % (epoch, best_nll))
 
     # logging
-    # print('Best NLL: %.4f, log(m): %.4f' % (best_nll, np.log(args.m)))
+    print('Best NLL: %.4f, log(m): %.4f' % (best_nll, np.log(args.m)))
     # with open(path + 'n-20-mps.txt', 'a', newline='\n') as f:
     with open(path + 'm-100-mps.txt', 'a', newline='\n') as f:
         f.write('%i %i %i %i %.8f\n' % (args.n, args.m, args.D, args.seed, best_nll))

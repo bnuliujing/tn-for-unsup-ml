@@ -2,7 +2,6 @@ import torch
 import math
 import numpy as np
 from scipy.special import logsumexp
-from tqdm import tqdm
 
 
 class SKModel():
@@ -24,7 +23,7 @@ class SKModel():
         n_total = int(math.pow(2, self.n))
         energy_arr = []
         self.J_np = self.J_np.astype(np.float64)
-        for idx in tqdm(range(n_total)):
+        for idx in range(n_total):
             s = np.binary_repr(idx, width=self.n)
             s = np.array(list(s)).astype(np.float64) * 2 - 1
             energy_arr.append(-0.5 * s.T @ self.J_np @ s)

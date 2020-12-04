@@ -1,0 +1,1 @@
+Download [binarized mnist dataset](https://github.com/mgermain/MADE/releases/download/ICML2015/binarized_mnist.npz) and put it in this folder. 
